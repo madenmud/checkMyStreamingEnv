@@ -46,6 +46,10 @@ body {
     font-weight: 500;
 }
 
+.hidden {
+    display: none !important;
+}
+
 /* Header */
 .header {
     padding: 2rem;
@@ -278,6 +282,10 @@ body {
     display: flex;
     justify-content: flex-end;
     z-index: 100;
+}
+
+.modal.hidden {
+    display: none;
 }
 
 .modal-content {
