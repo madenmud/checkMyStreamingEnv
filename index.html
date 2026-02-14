@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Hi-Fi 스트리밍 서비스 네트워크 지터 측정 및 시각화">
+    <title>Streaming Jitter Test by 깜깜한곱슬이</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <header class="header">
+        <h1 class="title">Streaming Jitter Test by 깜깜한곱슬이</h1>
+        <button type="button" class="btn btn-icon" id="btn-settings" aria-label="설정">⚙️</button>
+    </header>
+    <main class="main">
+        <p id="offline-notice" class="notice notice-warning hidden">네트워크에 연결되어 있지 않습니다. 측정을 위해 인터넷 연결이 필요합니다.</p>
+        <section class="section section-cards">
+            <h2 class="sr-only">스트리밍 서비스 선택</h2>
+            <div class="section-header">
+                <span class="section-title">서비스별 측정</span>
+                <button type="button" class="btn btn-primary" id="btn-measure-all">전체 지터 측정</button>
+            </div>
+            <div id="service-cards" class="service-grid"></div>
+        </section>
+        <section id="all-result-section" class="section section-all-result hidden">
+            <h2 class="section-title">전체 측정 결과</h2>
+            <p id="all-result-progress" class="all-result-progress"></p>
+            <div id="all-result-table-wrap" class="table-wrap"></div>
+            <div class="result-actions">
+                <button type="button" class="btn" id="btn-save-all">전체 결과 저장</button>
+                <button type="button" class="btn" id="btn-export-all">내보내기</button>
+            </div>
+        </section>
+        <section class="section section-chart">
+            <h2 class="section-title">실시간 지터 그래프</h2>
+            <div class="chart-wrap">
+                <canvas id="jitter-chart" width="400" height="200"></canvas>
+            </div>
+        </section>
+        <section id="measure-result" class="section section-result hidden" data-service-id="">
+            <!-- Filled by app.js -->
+        </section>
+    </main>
+    <footer class="footer">
+        <p>로그인 없이 사용 가능 · 데이터는 브라우저에만 저장됩니다</p>
+    </footer>
+    <div id="history-modal" class="modal hidden" role="dialog" aria-modal="true" aria-label="측정 히스토리">
+        <div class="modal-content">
+            <h2>측정 히스토리</h2>
+            <pre id="history-content"></pre>
+            <button type="button" class="btn" id="history-close">닫기</button>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js" crossorigin="anonymous"></script>
+    <script src="js/streaming-services.js"></script>
+    <script src="js/jitter-meter.js"></script>
+    <script src="js/chart-renderer.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
