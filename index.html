@@ -3,6 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>
+        (function () {
+            var p = location.pathname;
+            var base = p.endsWith('/') ? p : (p.replace(/\/[^/]*$/, '/') || '/');
+            document.write('<base href="' + location.origin + base + '">');
+        })();
+    </script>
     <meta name="description" content="Hi-Fi 스트리밍 서비스 네트워크 지터 측정 및 시각화">
     <title>Streaming Jitter Test by 깜깜한곱슬이</title>
     <link rel="stylesheet" href="css/styles.css">
