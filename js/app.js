@@ -300,6 +300,7 @@
         const savedTheme = localStorage.getItem('hifi-theme') || 'modern';
         
         function applyTheme(theme) {
+            console.log('Applying theme:', theme);
             document.body.classList.remove('theme-modern', 'theme-brutalist');
             document.body.classList.add(`theme-${theme}`);
             localStorage.setItem('hifi-theme', theme);

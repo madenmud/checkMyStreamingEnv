@@ -1,8 +1,7 @@
 /* Hi-Fi Jitter Meter - Unified Styles with Theme Support */
 
-/* --- Core Variables & Themes --- */
+/* --- Modern Theme Variables (Default) --- */
 :root {
-    /* Default: Modern Theme */
     --bg: #0b0b0e;
     --surface: #16161a;
     --surface-hover: #1e1e24;
@@ -23,21 +22,7 @@
     --drawer-w: 400px;
 }
 
-/* Light Mode Overrides for Modern */
-@media (prefers-color-scheme: light) {
-    body.theme-modern {
-        --bg: #f8fafc;
-        --surface: #ffffff;
-        --surface-hover: #f1f5f9;
-        --border: #e2e8f0;
-        --text: #0f172a;
-        --text-muted: #64748b;
-        --shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.1);
-        --glass: rgba(0, 0, 0, 0.02);
-    }
-}
-
-/* Brutalist Theme Overrides */
+/* --- Brutalist Theme Variables --- */
 body.theme-brutalist {
     --bg: #ffffff;
     --surface: #ffffff;
@@ -58,8 +43,22 @@ body.theme-brutalist {
     --drawer-w: 450px;
 }
 
-body.theme-brutalist.dark-mode, 
-(prefers-color-scheme: dark) {
+/* Light Mode for Modern (Only if system prefers light and we are in modern) */
+@media (prefers-color-scheme: light) {
+    body.theme-modern {
+        --bg: #f8fafc;
+        --surface: #ffffff;
+        --surface-hover: #f1f5f9;
+        --border: #e2e8f0;
+        --text: #0f172a;
+        --text-muted: #64748b;
+        --shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.1);
+        --glass: rgba(0, 0, 0, 0.02);
+    }
+}
+
+/* Dark Mode for Brutalist (Only if system prefers dark and we are in brutalist) */
+@media (prefers-color-scheme: dark) {
     body.theme-brutalist {
         --bg: #121212;
         --surface: #1e1e1e;
@@ -82,7 +81,7 @@ body {
     display: flex;
     flex-direction: column;
     line-height: 1.5;
-    transition: background 0.3s ease, color 0.3s ease;
+    transition: background 0.2s ease, color 0.2s ease;
 }
 
 .hidden { display: none !important; }
@@ -96,6 +95,7 @@ body {
     padding: 1.25rem 1.5rem;
     background: var(--glass);
     backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     border-bottom: var(--bw) solid var(--border);
     position: sticky;
     top: 0;
@@ -118,6 +118,7 @@ body.theme-brutalist .header {
 body.theme-brutalist .title {
     font-size: 1.5rem;
     font-style: italic;
+    font-weight: 900;
 }
 
 .main {
@@ -144,28 +145,35 @@ body.theme-brutalist .title {
     background: var(--surface);
     color: var(--text);
     text-transform: uppercase;
+    box-shadow: var(--shadow);
 }
 
 .btn:hover {
     background: var(--surface-hover);
     transform: translateY(-2px);
-    box-shadow: var(--shadow);
+}
+
+body.theme-brutalist .btn {
+    transform: none;
+}
+
+body.theme-brutalist .btn:hover {
+    background: var(--accent);
+    transform: translate(-2px, -2px);
+    box-shadow: 12px 12px 0px var(--border);
 }
 
 .btn:active { transform: translateY(0); }
+body.theme-brutalist .btn:active { transform: translate(2px, 2px); box-shadow: 2px 2px 0px var(--border); }
 
 .btn-primary {
     background: var(--accent);
     color: #fff;
 }
 
-body.theme-brutalist .btn {
-    box-shadow: 4px 4px 0px var(--border);
-}
-
-body.theme-brutalist .btn:active {
-    transform: translate(2px, 2px);
-    box-shadow: 2px 2px 0px var(--border);
+body.theme-brutalist .btn-primary {
+    background: var(--accent-secondary);
+    color: #000;
 }
 
 .btn-icon {
@@ -210,8 +218,9 @@ body.theme-brutalist .btn:active {
     inset: 0;
     background: rgba(0, 0, 0, 0.7);
     backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
     display: flex;
-    justify-content: flex-end; /* Default desktop: Right */
+    justify-content: flex-end;
     align-items: stretch;
     z-index: 1000;
     opacity: 0;
@@ -240,11 +249,10 @@ body.theme-brutalist .btn:active {
     transform: translateX(0);
 }
 
-/* Mobile Drawer - Bottom Sheet Style */
 @media (max-width: 600px) {
     .modal {
         justify-content: center;
-        align-items: flex-end; /* Slide from bottom */
+        align-items: flex-end;
     }
 
     .modal-content {
@@ -254,14 +262,12 @@ body.theme-brutalist .btn:active {
         height: auto;
         max-height: 85vh;
         transform: translateY(100%);
-        padding: 2rem 1.5rem;
+        padding: 2.5rem 1.5rem;
     }
 
     .modal:not(.hidden) .modal-content {
         transform: translateY(0);
     }
-    
-    .title { font-size: 1rem; }
 }
 
 /* --- Settings Content --- */
@@ -332,7 +338,6 @@ body.theme-brutalist .theme-btn.active {
 .result-label { font-size: 0.7rem; font-weight: 800; text-transform: uppercase; color: var(--text-muted); }
 .result-val { font-size: 1.25rem; font-weight: 900; font-family: var(--font-mono); display: block; margin-top: 0.25rem; }
 
-/* Quality Badges */
 .quality-badge {
     padding: 0.25rem 0.75rem;
     border-radius: 99px;
@@ -340,7 +345,6 @@ body.theme-brutalist .theme-btn.active {
     font-weight: 800;
     text-transform: uppercase;
     color: #fff;
-    border: var(--bw) solid rgba(0,0,0,0.1);
 }
 
 .quality-excellent { background: var(--success); color: #000; }
@@ -348,7 +352,7 @@ body.theme-brutalist .theme-btn.active {
 .quality-fair { background: var(--warning); color: #000; }
 .quality-poor { background: var(--danger); }
 
-/* Footer */
+/* --- Footer --- */
 .footer {
     padding: 3rem 1.5rem;
     text-align: center;
