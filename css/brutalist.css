@@ -270,11 +270,75 @@ body {
     font-family: var(--font-mono);
 }
 
-/* Modal */
+/* Drawer Styles (Brutal) */
+.modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: flex-end;
+    z-index: 100;
+}
+
 .modal-content {
-    border: var(--bw) solid var(--border);
-    box-shadow: 16px 16px 0px var(--border);
     background: var(--surface);
+    border-left: var(--bw) solid var(--border);
+    width: 100%;
+    max-width: 450px;
+    height: 100vh;
+    padding: 3rem;
+    box-shadow: -12px 0px 0px var(--border);
+    display: flex;
+    flex-direction: column;
+}
+
+.modal-content h2 {
+    font-size: 2.5rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    font-style: italic;
+    margin-bottom: 2rem;
+}
+
+.settings-group {
+    margin-bottom: 3rem;
+}
+
+.settings-group label {
+    font-size: 1.2rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 1rem;
+}
+
+.theme-options {
+    display: grid;
+    gap: 1.5rem;
+}
+
+.theme-btn {
+    padding: 1.5rem;
+    border: var(--bw) solid var(--border);
+    background: var(--bg);
+    color: var(--text);
+    font-size: 1.2rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    text-align: left;
+    cursor: pointer;
+    box-shadow: 4px 4px 0px var(--border);
+}
+
+.theme-btn.active {
+    background: var(--accent-secondary);
+    color: #000;
+    transform: translate(-2px, -2px);
+    box-shadow: 6px 6px 0px var(--border);
+}
+
+.modal-close-btn {
+    margin-top: auto;
 }
 
 /* Footer */

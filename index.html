@@ -56,24 +56,30 @@
     </footer>
     <div id="settings-modal" class="modal hidden" role="dialog" aria-modal="true" aria-label="설정">
         <div class="modal-content">
-            <h2>설정</h2>
+            <h2>Settings</h2>
             <div class="settings-group">
-                <label for="theme-select">테마 선택</label>
-                <select id="theme-select" class="btn" style="width: 100%; margin-top: 0.5rem; background: var(--surface); color: var(--text);">
-                    <option value="modern">Modern (Glassmorphism)</option>
-                    <option value="brutalist">Brutalist (Bold)</option>
-                </select>
+                <label>Theme Appearance</label>
+                <div class="theme-options">
+                    <button type="button" class="theme-btn" data-theme="modern">
+                        Modern Glass
+                    </button>
+                    <button type="button" class="theme-btn" data-theme="brutalist">
+                        Neo-Brutalist
+                    </button>
+                </div>
             </div>
-            <div style="margin-top: 2rem;">
-                <button type="button" class="btn" id="settings-close">닫기</button>
+            <div class="modal-close-btn">
+                <button type="button" class="btn btn-primary" id="settings-close" style="width: 100%;">Close Settings</button>
             </div>
         </div>
     </div>
     <div id="history-modal" class="modal hidden" role="dialog" aria-modal="true" aria-label="측정 히스토리">
         <div class="modal-content">
-            <h2>측정 히스토리</h2>
+            <h2>Measurement History</h2>
             <pre id="history-content"></pre>
-            <button type="button" class="btn" id="history-close">닫기</button>
+            <div class="modal-close-btn">
+                <button type="button" class="btn btn-primary" id="history-close" style="width: 100%;">Close History</button>
+            </div>
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js" crossorigin="anonymous"></script>

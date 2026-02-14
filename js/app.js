@@ -296,18 +296,22 @@
         renderServiceCards('service-cards');
         
         // Theme Management
-        const themeSelect = document.getElementById('theme-select');
+        const themeBtns = document.querySelectorAll('.theme-btn');
         const themeLink = document.getElementById('theme-link');
         const savedTheme = localStorage.getItem('hifi-theme') || 'modern';
         
-        if (themeSelect && themeLink) {
-            themeSelect.value = savedTheme;
-            themeLink.href = `css/${savedTheme}.css`;
-            
-            themeSelect.addEventListener('change', (e) => {
-                const newTheme = e.target.value;
-                themeLink.href = `css/${newTheme}.css`;
-                localStorage.setItem('hifi-theme', newTheme);
+        function applyTheme(theme) {
+            themeLink.href = `css/${theme}.css`;
+            localStorage.setItem('hifi-theme', theme);
+            themeBtns.forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.theme === theme);
+            });
+        }
+
+        if (themeLink) {
+            applyTheme(savedTheme);
+            themeBtns.forEach(btn => {
+                btn.addEventListener('click', () => applyTheme(btn.dataset.theme));
             });
         }
 
