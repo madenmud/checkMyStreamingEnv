@@ -297,23 +297,21 @@
         
         // Theme Management
         const themeBtns = document.querySelectorAll('.theme-btn');
-        const themeLink = document.getElementById('theme-link');
         const savedTheme = localStorage.getItem('hifi-theme') || 'modern';
         
         function applyTheme(theme) {
-            themeLink.href = `css/${theme}.css`;
+            document.body.classList.remove('theme-modern', 'theme-brutalist');
+            document.body.classList.add(`theme-${theme}`);
             localStorage.setItem('hifi-theme', theme);
             themeBtns.forEach(btn => {
                 btn.classList.toggle('active', btn.dataset.theme === theme);
             });
         }
 
-        if (themeLink) {
-            applyTheme(savedTheme);
-            themeBtns.forEach(btn => {
-                btn.addEventListener('click', () => applyTheme(btn.dataset.theme));
-            });
-        }
+        applyTheme(savedTheme);
+        themeBtns.forEach(btn => {
+            btn.addEventListener('click', () => applyTheme(btn.dataset.theme));
+        });
 
         const chartEl = document.getElementById('jitter-chart');
         let chartRenderer = null;
