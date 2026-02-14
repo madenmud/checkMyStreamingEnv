@@ -147,6 +147,7 @@
       </ul>
       <p class="result-service">서비스: <strong>${serviceName}</strong> ${bufSec != null ? ' · 예상 버퍼링: ' + bufSec + '초' : ''}</p>
       <div class="result-actions">
+        <button type="button" class="btn btn-primary" id="btn-guidance">💡 개선 가이드 보기</button>
         <button type="button" class="btn btn-save" id="btn-save-result">💾 측정 저장</button>
         <button type="button" class="btn btn-history" id="btn-history">📋 히스토리</button>
         <button type="button" class="btn btn-export" id="btn-export">📤 내보내기</button>
@@ -154,6 +155,13 @@
         const saveBtn = document.getElementById('btn-save-result');
         const historyBtn = document.getElementById('btn-history');
         const exportBtn = document.getElementById('btn-export');
+        const guidanceBtn = document.getElementById('btn-guidance');
+
+        if (guidanceBtn) {
+            guidanceBtn.addEventListener('click', () => {
+                showGuidanceModal(stats, STREAMING_SERVICES.find(s => s.id === serviceId));
+            });
+        }
         if (saveBtn) {
             saveBtn.addEventListener('click', () => {
                 saveResult(serviceId || 'unknown', serviceName, stats);
@@ -187,6 +195,79 @@
 
     function closeHistoryModal() {
         const modal = document.getElementById('history-modal');
+        if (modal) modal.classList.add('hidden');
+    }
+
+    function showGuidanceModal(stats, service) {
+        const engine = new GuidanceEngine();
+        const guide = engine.generate(stats, service);
+        const modal = document.getElementById('guidance-modal');
+        const content = document.getElementById('guidance-content');
+        if (!modal || !content) return;
+
+        content.innerHTML = `
+            <div class="guidance-wrap">
+                ${guide.warnings.length > 0 ? `
+                    <div class="guidance-section">
+                        <label>⚠️ 주요 경고</label>
+                        <ul class="guidance-list">
+                            ${guide.warnings.map(w => `<li class="warning-${w.level}">${w.text}</li>`).join('')}
+                        </ul>
+                    </div>
+                ` : ''}
+
+                <div class="guidance-section">
+                    <label>🚀 즉시 권장 조치</label>
+                    <div class="action-cards">
+                        ${guide.immediateActions.map(a => `
+                            <div class="action-card priority-${a.priority}">
+                                <strong>${a.action}</strong>
+                                <p>${a.reason}</p>
+                                ${a.tip ? `<small>💡 ${a.tip}</small>` : ''}
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+
+                <div class="guidance-section">
+                    <label>🌐 네트워크 최적화</label>
+                    <ul class="guidance-list">
+                        <li>상태 평가: <strong>${guide.networkGuide.status}</strong></li>
+                        <li>권장 연결: <strong>${guide.networkGuide.recommendation}</strong></li>
+                        <li>WiFi 팁: ${guide.networkGuide.wifiTip}</li>
+                        <li>고급: ${guide.networkGuide.bufferbloat}</li>
+                    </ul>
+                </div>
+
+                <div class="guidance-section">
+                    <label>💻 시스템 및 오디오 설정</label>
+                    <ul class="guidance-list">
+                        <li>권장 환경: ${guide.systemGuide.os}</li>
+                        <li>오디오 버퍼: <strong>${guide.systemGuide.audio.buffer}</strong></li>
+                        <li>드라이버: ${guide.systemGuide.audio.driver}</li>
+                    </ul>
+                    <div class="optimization-tips">
+                        ${guide.systemGuide.optimization.map(opt => `<div>• ${opt}</div>`).join('')}
+                    </div>
+                </div>
+
+                <div class="guidance-section">
+                    <label>🎵 추천 플레이어 소프트웨어</label>
+                    <div class="software-list">
+                        ${guide.softwareRecommendations.map(s => `
+                            <div class="software-item">
+                                <strong>${s.name}</strong>: ${s.reason}
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            </div>
+        `;
+        modal.classList.remove('hidden');
+    }
+
+    function closeGuidanceModal() {
+        const modal = document.getElementById('guidance-modal');
         if (modal) modal.classList.add('hidden');
     }
 
@@ -365,6 +446,11 @@
         document.getElementById('history-close')?.addEventListener('click', closeHistoryModal);
         document.getElementById('history-modal')?.addEventListener('click', (e) => {
             if (e.target.id === 'history-modal') closeHistoryModal();
+        });
+
+        document.getElementById('guidance-close')?.addEventListener('click', closeGuidanceModal);
+        document.getElementById('guidance-modal')?.addEventListener('click', (e) => {
+            if (e.target.id === 'guidance-modal') closeGuidanceModal();
         });
 
         if (!navigator.onLine) {
