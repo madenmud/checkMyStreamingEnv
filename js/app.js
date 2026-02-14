@@ -5,10 +5,10 @@
     const STORAGE_KEY = 'hifi-jitter-history';
     const MAX_HISTORY = 100;
     const QUALITY_LEVELS = [
-        { max: 5, label: '우수', emoji: '🟢', color: '#22c55e' },
-        { max: 15, label: '양호', emoji: '🟡', color: '#eab308' },
-        { max: 30, label: '보통', emoji: '🟠', color: '#f97316' },
-        { max: Infinity, label: '불량', emoji: '🔴', color: '#ef4444' }
+        { max: 5, label: '우수', emoji: '🟢', class: 'quality-excellent' },
+        { max: 15, label: '양호', emoji: '🟡', class: 'quality-good' },
+        { max: 30, label: '보통', emoji: '🟠', class: 'quality-fair' },
+        { max: Infinity, label: '불량', emoji: '🔴', class: 'quality-poor' }
     ];
 
     function getQuality(avgJitter) {
@@ -118,21 +118,38 @@
         resultEl.classList.remove('hidden');
         resultEl.setAttribute('data-service-id', serviceId || '');
         resultEl.innerHTML = `
-      <h3>측정 결과</h3>
+      <h3>측정 결과 <span class="quality-badge ${q.class}">${q.emoji} ${q.label}</span></h3>
       <ul class="result-list">
-        <li>평균 지터: ${formatMs(stats.avgJitter)} <span class="quality-badge" style="background:${q.color}">${q.emoji} ${q.label}</span></li>
-        <li>최대 지터: ${formatMs(stats.maxJitter)}</li>
-        <li>평균 RTT: ${formatMs(stats.avgRtt)}</li>
-        <li>표준편차: ${formatMs(stats.stdDev)}</li>
-        <li>패킷 손실: ${formatPercent(stats.packetLoss)}</li>
-        <li>MOS 예측: ${stats.mosScore != null ? stats.mosScore.toFixed(1) : '—'}</li>
-        ${bufSec != null ? '<li>예상 버퍼링: ' + bufSec + '초 (96kHz 기준)</li>' : ''}
+        <li>
+            <span class="result-label">평균 지터</span>
+            <span class="result-val">${formatMs(stats.avgJitter)}</span>
+        </li>
+        <li>
+            <span class="result-label">최대 지터</span>
+            <span class="result-val">${formatMs(stats.maxJitter)}</span>
+        </li>
+        <li>
+            <span class="result-label">평균 RTT</span>
+            <span class="result-val">${formatMs(stats.avgRtt)}</span>
+        </li>
+        <li>
+            <span class="result-label">표준편차</span>
+            <span class="result-val">${formatMs(stats.stdDev)}</span>
+        </li>
+        <li>
+            <span class="result-label">패킷 손실</span>
+            <span class="result-val">${formatPercent(stats.packetLoss)}</span>
+        </li>
+        <li>
+            <span class="result-label">MOS 예측</span>
+            <span class="result-val">${stats.mosScore != null ? stats.mosScore.toFixed(1) : '—'}</span>
+        </li>
       </ul>
-      <p class="result-service">서비스: ${serviceName}</p>
+      <p class="result-service">서비스: <strong>${serviceName}</strong> ${bufSec != null ? ' · 예상 버퍼링: ' + bufSec + '초' : ''}</p>
       <div class="result-actions">
-        <button type="button" class="btn btn-save" id="btn-save-result">측정 저장</button>
-        <button type="button" class="btn btn-history" id="btn-history">히스토리 보기</button>
-        <button type="button" class="btn btn-export" id="btn-export">내보내기</button>
+        <button type="button" class="btn btn-save" id="btn-save-result">💾 측정 저장</button>
+        <button type="button" class="btn btn-history" id="btn-history">📋 히스토리</button>
+        <button type="button" class="btn btn-export" id="btn-export">📤 내보내기</button>
       </div>`;
         const saveBtn = document.getElementById('btn-save-result');
         const historyBtn = document.getElementById('btn-history');
@@ -200,7 +217,7 @@
               <td><strong>${r.serviceName}</strong></td>
               <td class="num">${formatMs(r.stats.avgJitter)}</td>
               <td class="num">${formatMs(r.stats.maxJitter)}</td>
-              <td><span class="quality-badge" style="background:${q.color}">${q.emoji} ${q.label}</span></td>
+              <td><span class="quality-badge ${q.class}">${q.emoji} ${q.label}</span></td>
               <td class="num">${formatMs(r.stats.avgRtt)}</td>
               <td class="num">${formatPercent(r.stats.packetLoss)}</td>
             </tr>`;

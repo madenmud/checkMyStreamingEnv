@@ -86,5 +86,16 @@ const STREAMING_SERVICES = [
         ],
         cors: false,
         testMethod: 'image-ping'
+    },
+    {
+        id: 'presto-music',
+        name: 'Presto Music',
+        tier: 'Hi-Res',
+        bitrate: '24bit/192kHz',
+        endpoints: [
+            'https://www.prestomusic.com'
+        ],
+        cors: false,
+        testMethod: 'image-ping'
     }
 ];
