@@ -294,6 +294,23 @@
 
     function initApp() {
         renderServiceCards('service-cards');
+        
+        // Theme Management
+        const themeSelect = document.getElementById('theme-select');
+        const themeLink = document.getElementById('theme-link');
+        const savedTheme = localStorage.getItem('hifi-theme') || 'modern';
+        
+        if (themeSelect && themeLink) {
+            themeSelect.value = savedTheme;
+            themeLink.href = `css/${savedTheme}.css`;
+            
+            themeSelect.addEventListener('change', (e) => {
+                const newTheme = e.target.value;
+                themeLink.href = `css/${newTheme}.css`;
+                localStorage.setItem('hifi-theme', newTheme);
+            });
+        }
+
         const chartEl = document.getElementById('jitter-chart');
         let chartRenderer = null;
         if (chartEl) {
@@ -333,9 +350,15 @@
         });
         document.getElementById('btn-save-all')?.addEventListener('click', saveAllResultsOnce);
         document.getElementById('btn-export-all')?.addEventListener('click', exportAllResultsOnce);
+        
+        const settingsModal = document.getElementById('settings-modal');
         document.getElementById('btn-settings')?.addEventListener('click', () => {
-            alert('설정은 추후 Phase 2에서 제공됩니다.');
+            settingsModal?.classList.remove('hidden');
         });
+        document.getElementById('settings-close')?.addEventListener('click', () => {
+            settingsModal?.classList.add('hidden');
+        });
+
         document.getElementById('history-close')?.addEventListener('click', closeHistoryModal);
         document.getElementById('history-modal')?.addEventListener('click', (e) => {
             if (e.target.id === 'history-modal') closeHistoryModal();

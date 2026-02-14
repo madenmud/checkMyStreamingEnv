@@ -14,8 +14,8 @@
     <title>Streaming Jitter Test</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@300..700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" id="theme-link" href="css/modern.css">
 </head>
 <body>
     <header class="header">
@@ -54,6 +54,21 @@
     <footer class="footer">
         <p>로그인 없이 사용 가능 · 데이터는 브라우저에만 저장됩니다</p>
     </footer>
+    <div id="settings-modal" class="modal hidden" role="dialog" aria-modal="true" aria-label="설정">
+        <div class="modal-content">
+            <h2>설정</h2>
+            <div class="settings-group">
+                <label for="theme-select">테마 선택</label>
+                <select id="theme-select" class="btn" style="width: 100%; margin-top: 0.5rem; background: var(--surface); color: var(--text);">
+                    <option value="modern">Modern (Glassmorphism)</option>
+                    <option value="brutalist">Brutalist (Bold)</option>
+                </select>
+            </div>
+            <div style="margin-top: 2rem;">
+                <button type="button" class="btn" id="settings-close">닫기</button>
+            </div>
+        </div>
+    </div>
     <div id="history-modal" class="modal hidden" role="dialog" aria-modal="true" aria-label="측정 히스토리">
         <div class="modal-content">
             <h2>측정 히스토리</h2>
